@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ EV Charging Scheduler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">⚡</span>
+        <div>
+          <h1 class="site-title">EV Charging Scheduler</h1>
+          <p class="site-sub">Smart overnight charging based on spot prices</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="badge badge-demo" id="modeBadge">Demo Mode</span>
+        <span class="clock" id="clock"></span>
+      </div>
+    </header>
+
+    <!-- ── Main grid ───────────────────────────────────────── -->
+    <main class="layout">
+
+      <!-- Left – price list ---------------------------------- -->
+      <section class="price-panel">
+
+        <!-- Tab bar + mode toggle -->
+        <div class="panel-toolbar">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-day="today"    role="tab" aria-selected="true">Today</button>
+            <button class="tab"        data-day="tomorrow" role="tab" aria-selected="false">Tomorrow</button>
+          </div>
+          <div class="mode-switch">
+            <button class="mode-btn active" data-mode="manual" id="manualBtn">Manual</button>
+            <button class="mode-btn"        data-mode="auto"   id="autoBtn">Auto</button>
+          </div>
+        </div>
+
+        <!-- Price legend -->
+        <div class="legend">
+          <span><span class="dot dot-green"></span>Cheap</span>
+          <span><span class="dot dot-amber"></span>Medium</span>
+          <span><span class="dot dot-red"></span>Expensive</span>
+          <span class="legend-window"><span class="dot dot-blue"></span>In window</span>
+        </div>
+
+        <!-- Hour rows (populated by JS) -->
+        <div id="priceList" class="price-list" role="list">
+          <div class="loading-msg">
+            <span class="spinner"></span> Loading prices…
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right – settings + summary + actions --------------- -->
+      <aside class="side-panel">
+
+        <!-- Settings card -->
+        <div class="card">
+          <h2 class="card-title">⚙️ Settings</h2>
+
+          <div class="field-group">
+            <label class="field-label" for="chargingPower">Charging power (kW)</label>
+            <input class="field-input" type="number" id="chargingPower" min="1" max="22" step="0.5" value="11" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="energyNeeded">Energy needed (kWh)</label>
+            <input class="field-input" type="number" id="energyNeeded" min="1" max="150" step="0.5" value="22" />
+            <span class="field-hint" id="hoursHint">→ 2 h at 11 kW</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label" for="windowStart">Window start</label>
+              <select class="field-input" id="windowStart"></select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="windowEnd">Window end</label>
+              <select class="field-input" id="windowEnd"></select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="targetReadyBy">Ready by</label>
+            <select class="field-input" id="targetReadyBy"></select>
+          </div>
+        </div>
+
+        <!-- Summary card -->
+        <div class="card summary-card" id="summaryCard">
+          <h2 class="card-title">📊 Summary</h2>
+          <div class="summary-grid">
+            <span class="s-label">Selected hours</span> <span class="s-value" id="totalHours">0</span>
+            <span class="s-label">Estimated energy</span> <span class="s-value" id="totalEnergy">0 kWh</span>
+            <span class="s-label">Estimated cost</span>  <span class="s-value accent" id="totalCost">€0.00</span>
+            <span class="s-label">Avg price</span>       <span class="s-value" id="avgPrice">— snt/kWh</span>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-strip">
+          <button class="btn btn-primary" id="autoPickBtn">⚡ Auto-pick cheapest</button>
+          <button class="btn btn-ghost"   id="clearBtn">✕ Clear</button>
+          <button class="btn btn-save"    id="saveBtn">💾 Save schedule</button>
+        </div>
+
+      </aside>
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

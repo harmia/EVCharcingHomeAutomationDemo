@@ -1,0 +1,21 @@
+{
+  "name": "ev-charging-scheduler",
+  "version": "1.0.0",
+  "description": "Home automation web app for EV charging scheduling based on spot electricity prices",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --forceExit"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "better-sqlite3": "^9.4.3",
+    "express": "^4.18.3",
+    "express-rate-limit": "^8.4.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0"
+  }
+}
